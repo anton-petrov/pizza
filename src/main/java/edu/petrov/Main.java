@@ -1,3 +1,10 @@
+/**
+ *
+ * Anton Petrov, 2017.
+ * anton.a.petrov@gmail.com
+ *
+ */
+
 package edu.petrov;
 
 import static java.lang.System.out;
