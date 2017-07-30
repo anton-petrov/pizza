@@ -1,6 +1,5 @@
 package edu.petrov;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,42 +24,49 @@ public class Pizza {
         }
     }
 
-    private void calculateAllCuttingOptions() {
+    protected void calculateAllCuttingOptions() {
+        allPizzaCuttingOptions.clear();
         allPizzaCuttingOptions.add(pizza);
         List<List<Integer>> currentPizzaCuttingOptions = new LinkedList<>(allPizzaCuttingOptions);
         int divider = PIECE_SIZE / 2;
         while (divider > 0) {
             currentPizzaCuttingOptions = getPizzaCuttingOptionsByDivider(currentPizzaCuttingOptions, divider);
-            allPizzaCuttingOptions.addAll(currentPizzaCuttingOptions);
+            if (currentPizzaCuttingOptions != null)
+                allPizzaCuttingOptions.addAll(currentPizzaCuttingOptions);
             divider /= 2;
         }
     }
 
     protected List<List<Integer>> getPizzaCuttingOptionsByDivider(List<List<Integer>> pizzaOptions, int divider) {
-        List<List<Integer>> pizzaCuttingOptions = new LinkedList<>();
-        for (List<Integer> pizzaCuttingOption : pizzaOptions) {
-            boolean canCutDown = true;
-            LinkedList<Integer> currentPizzaCuttingOption = new LinkedList<>(pizzaCuttingOption);
-            while (canCutDown) {
-                LinkedList<Integer> newPizzaCuttingOption = new LinkedList<>();
-                canCutDown = false;
-                for (int i = 0; i < currentPizzaCuttingOption.size() - 1; i++) {
-                    if (currentPizzaCuttingOption.get(i) == divider * 2 && currentPizzaCuttingOption.get(i + 1) == divider * 2) {
-                        newPizzaCuttingOption.add(divider);
-                        currentPizzaCuttingOption.remove(i);
-                        currentPizzaCuttingOption.remove(i);
-                        newPizzaCuttingOption.addAll(currentPizzaCuttingOption);
-                        currentPizzaCuttingOption = new LinkedList<>(newPizzaCuttingOption);
-                        canCutDown = true;
-                        break;
+        try {
+            List<List<Integer>> pizzaCuttingOptions = new LinkedList<>();
+            for (List<Integer> pizzaCuttingOption : pizzaOptions) {
+                boolean canCutDown = true;
+                LinkedList<Integer> currentPizzaCuttingOption = new LinkedList<>(pizzaCuttingOption);
+                while (canCutDown) {
+                    LinkedList<Integer> newPizzaCuttingOption = new LinkedList<>();
+                    canCutDown = false;
+                    for (int i = 0; i < currentPizzaCuttingOption.size() - 1; i++) {
+                        if (currentPizzaCuttingOption.get(i) == divider * 2 && currentPizzaCuttingOption.get(i + 1) == divider * 2) {
+                            newPizzaCuttingOption.add(divider);
+                            currentPizzaCuttingOption.remove(i);
+                            currentPizzaCuttingOption.remove(i);
+                            newPizzaCuttingOption.addAll(currentPizzaCuttingOption);
+                            currentPizzaCuttingOption = new LinkedList<>(newPizzaCuttingOption);
+                            canCutDown = true;
+                            break;
+                        }
+                    }
+                    if (newPizzaCuttingOption.size() > 0) {
+                        pizzaCuttingOptions.add(newPizzaCuttingOption);
                     }
                 }
-                if (newPizzaCuttingOption.size() > 0) {
-                    pizzaCuttingOptions.add(newPizzaCuttingOption);
-                }
             }
+            return pizzaCuttingOptions;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            return null;
         }
-        return pizzaCuttingOptions;
     }
 
     @Override
