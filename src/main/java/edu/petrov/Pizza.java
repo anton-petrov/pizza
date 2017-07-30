@@ -1,5 +1,6 @@
 package edu.petrov;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class Pizza {
         }
     }
 
-    private List<List<Integer>> getPizzaCuttingOptionsByDivider(List<List<Integer>> pizzaOptions, int divider) {
+    protected List<List<Integer>> getPizzaCuttingOptionsByDivider(List<List<Integer>> pizzaOptions, int divider) {
         List<List<Integer>> pizzaCuttingOptions = new LinkedList<>();
         for (List<Integer> pizzaCuttingOption : pizzaOptions) {
             boolean canCutDown = true;

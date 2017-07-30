@@ -17,12 +17,14 @@ public class Main {
         }
         try {
             birthDay = Integer.parseInt(args[0]);
+            if (birthDay < 0)
+                throw new NumberFormatException();
         } catch (NumberFormatException e) {
             out.println("Please, enter correct birthday in format DDMMYYYY or DDMMYY. Thank you for patience!");
             System.exit(-1);
         }
-        int X = (birthDay % 7) + 7;
-        pizza.setSize(X);
+
+        pizza.setSize(MagicBirthdayNumberGenerator.getMagicNumber(birthDay));
 
         int timeToSleep = 3000;
         new Thread(() -> {
