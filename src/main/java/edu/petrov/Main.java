@@ -25,7 +25,7 @@ public class Main {
         try {
             birthDay = Integer.parseInt(args[0]);
             // checking for correct date of birth
-            if (birthDay < 0 || (args[0].length() != 6 || args[0].length() != 8))
+            if (birthDay < 0 || (args[0].length() != 6 && args[0].length() != 8))
                 throw new NumberFormatException();
         } catch (NumberFormatException e) {
             out.println("Please, enter correct birthday in format DDMMYYYY or DDMMYY. Thank you for patience!");
