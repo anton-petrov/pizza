@@ -44,6 +44,13 @@ public class Pizza {
         }
     }
 
+    protected boolean canJoinAdjacentPieces(List<Integer> pizza, int pieceSize, int position) throws IndexOutOfBoundsException {
+        if (position < 0 || position >= pizza.size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        return pizza.get(position) == pieceSize * 2 && pizza.get(position + 1) == pieceSize * 2;
+    }
+
     protected List<List<Integer>> getPizzaCuttingOptionsByDivider(List<List<Integer>> pizzaOptions, int divider) {
         try {
             List<List<Integer>> pizzaCuttingOptions = new LinkedList<>();
@@ -54,7 +61,7 @@ public class Pizza {
                     LinkedList<Integer> newPizzaCuttingOption = new LinkedList<>();
                     canCutDown = false;
                     for (int i = 0; i < currentPizzaCuttingOption.size() - 1; i++) {
-                        if (currentPizzaCuttingOption.get(i) == divider * 2 && currentPizzaCuttingOption.get(i + 1) == divider * 2) {
+                        if (canJoinAdjacentPieces(currentPizzaCuttingOption, divider, i)) {
                             newPizzaCuttingOption.add(divider);
                             currentPizzaCuttingOption.remove(i);
                             currentPizzaCuttingOption.remove(i);
@@ -70,7 +77,7 @@ public class Pizza {
                 }
             }
             return pizzaCuttingOptions;
-        } catch (NullPointerException e) {
+        } catch (NullPointerException | IndexOutOfBoundsException e) {
             e.printStackTrace();
             return null;
         }
